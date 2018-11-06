@@ -1,0 +1,29 @@
+/************************************************************
+Audio I/F = Focusrite Clarett 2Pre(thunderbolt対応)
+で動かすためのメモ
+************************************************************/
+■Focustire control app : Device Settings : Clock Source
+	Internal
+	...左上の"Sync"がGreenになることを確認
+
+■音がAudioIFの所まで来てない場合 : Monitor HeadPhoneからも音が聞こえない
+	File->Restore Factory Defaults
+	してみると治ることがある。
+	
+■sample Rate
+	oF上の設定
+		soundStream.setup(this, 2/* out */, 2/* in */, AUDIO_SAMPLERATE, AUDIO_BUF_SIZE, AUDIO_BUFFERS);
+	によってFocustire Control app上の値も変化した。
+	
+	当然、これを上げすぎるとsoftware側の処理時間が短くなる。
+	音源はPCを通さず鳴らし、処理はLow sample rate(44.1kHz)で行うこと。
+	
+■Mixing & Routing
+	HARDWARE INPUTS	:	Analogue 1-2
+						...これを消しても、thunderbolt側へは出力されるよう
+						あくまで内部Monitorのinput
+	
+	OUTPUTS			:	Line Outputs 3-4(HeadPhone icon)
+						-> HeadPhone
+
+

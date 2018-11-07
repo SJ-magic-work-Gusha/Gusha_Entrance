@@ -402,6 +402,9 @@ void LIGHT::check_DesignTable()
 			case COLOR_THEME::THEME_BLUE:
 				printf("---------- BLUE ----------\n");
 				break;
+			case COLOR_THEME::THEME_PURPLE:
+				printf("---------- PURPLE ----------\n");
+				break;
 		}
 		
 		for(int i = 0; i < NUM_STATES; i++){

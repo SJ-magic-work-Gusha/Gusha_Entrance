@@ -770,7 +770,7 @@ private:
 public:
 	/****************************************
 	****************************************/
-	ofApp(int _soundStream_Input_DeviceId, int _soundStream_Output_DeviceId, bool _b_EnableAudioOut, bool _b_EnableProcess_CheckLightDesign, bool _b_EnableProcess_Light, bool _b_EnableProcess_vj);
+	ofApp(int _soundStream_Input_DeviceId, int _soundStream_Output_DeviceId, bool _b_EnableProcess_CheckLightDesign, bool _b_EnableProcess_Light, bool _b_EnableProcess_vj);
 	~ofApp();
 	
 	void setup();

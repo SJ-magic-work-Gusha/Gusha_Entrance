@@ -21,7 +21,7 @@ static COLOR_DYNAMIC_ALPHA col_orange(ofColor(255, 120, 0, 255));
 
 /******************************
 ******************************/
-ofApp::ofApp(int _soundStream_Input_DeviceId, int _soundStream_Output_DeviceId, bool _b_EnableAudioOut, bool _b_EnableProcess_CheckLightDesign, bool _b_EnableProcess_Light, bool _b_EnableProcess_vj)
+ofApp::ofApp(int _soundStream_Input_DeviceId, int _soundStream_Output_DeviceId, bool _b_EnableProcess_CheckLightDesign, bool _b_EnableProcess_Light, bool _b_EnableProcess_vj)
 : soundStream_Input_DeviceId(_soundStream_Input_DeviceId)
 , soundStream_Output_DeviceId(_soundStream_Output_DeviceId)
 , b_DispGui(true)
@@ -36,7 +36,7 @@ ofApp::ofApp(int _soundStream_Input_DeviceId, int _soundStream_Output_DeviceId, 
 , t_Beat_Band3(-1)
 , b_Beat_Band3(false)
 , Light(LIGHT::getInstance())
-, b_EnableAudioOut(_b_EnableAudioOut)
+, b_EnableAudioOut(false)
 {
 	/********************
 	placement new
@@ -174,19 +174,25 @@ void ofApp::setup(){
 	
 	/********************
 	********************/
-	vector<ofSoundDevice> SoundStreamLists = soundStream.listDevices();
-	if( (soundStream_Input_DeviceId == -1) || (soundStream_Output_DeviceId == -1) ){
-		ofExit();
-		return;
-	}else if(SoundStreamLists[soundStream_Output_DeviceId].name == "Apple Inc.: Built-in Output"){
-		printf("!!!!! prohibited to use [%s] for output ... by SJ for safety !!!!!\n", SoundStreamLists[soundStream_Output_DeviceId].name.c_str());
-		ofExit();
-		return;
-	}
 	// soundStream.setDeviceID(soundStream_DeviceId);
 	/* set in & out respectively. */
-	soundStream.setInDeviceID(soundStream_Input_DeviceId);  
-	soundStream.setOutDeviceID(soundStream_Output_DeviceId);
+	vector<ofSoundDevice> SoundStreamLists = soundStream.listDevices();
+	if( soundStream_Input_DeviceId == -1 ){
+		ofExit();
+		return;
+		
+	}else{
+		soundStream.setInDeviceID(soundStream_Input_DeviceId);
+		
+		if( soundStream_Output_DeviceId != -1 ){
+			if(SoundStreamLists[soundStream_Output_DeviceId].name == "Apple Inc.: Built-in Output"){
+				printf("!!!!! prohibited to use [%s] for output ... by SJ for safety !!!!!\n", SoundStreamLists[soundStream_Output_DeviceId].name.c_str());
+			}else{
+				soundStream.setOutDeviceID(soundStream_Output_DeviceId);
+				b_EnableAudioOut = true;
+			}
+		}
+	}
 	
 	AudioSample.resize(AUDIO_BUF_SIZE);
 	
@@ -207,17 +213,8 @@ void ofApp::setup(){
 	out/in chs
 		今回は、audioOut()から出力する音はないので、検討時に誤ってLoopハウリングを起こすなどの危険性に対する安全も考慮し、out ch = 0.とした.
 	********************/
-#ifdef SOUND_OUTPUT
-	/********************
-	安全のため、compile swithc = SOUND_OUTPUTと、
-	さらに、
-	実行時は、Boot Paramete = b_EnableAudioOut をtrueにしない限り、outputしないようにした.
-	********************/
 	if(b_EnableAudioOut)	soundStream.setup(this, 2/* out */, 2/* in */, AUDIO_SAMPLERATE, AUDIO_BUF_SIZE, AUDIO_BUFFERS);
 	else					soundStream.setup(this, 0/* out */, 2/* in */, AUDIO_SAMPLERATE, AUDIO_BUF_SIZE, AUDIO_BUFFERS);
-#else
-	soundStream.setup(this, 0/* out */, 2/* in */, AUDIO_SAMPLERATE, AUDIO_BUF_SIZE, AUDIO_BUFFERS);
-#endif
 	
 	/********************
 	********************/
@@ -1599,7 +1596,6 @@ void ofApp::audioOut(float *output, int bufferSize, int nChannels)
 	o	:No output.
 	********************/
     for (int i = 0; i < bufferSize; i++) {
-#ifdef SOUND_OUTPUT
 		if(b_EnableAudioOut){
 			output[2*i  ] = AudioSample.Left[i];
 			output[2*i+1] = AudioSample.Right[i];
@@ -1607,10 +1603,6 @@ void ofApp::audioOut(float *output, int bufferSize, int nChannels)
 			output[2*i  ] = 0; // L
 			output[2*i+1] = 0; // R
 		}
-#else
-		output[2*i  ] = 0; // L
-		output[2*i+1] = 0; // R
-#endif
     }
 }
 

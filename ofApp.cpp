@@ -871,7 +871,7 @@ void ofApp::draw(){
 		sprintf(buf, "%7.2f", ofGetFrameRate());
 		ofSetColor(col_white.GetColor(100));
 		// font[FONT_M].drawString(buf, 5, 830);
-		font[FONT_M].drawString(buf, 100, 830);
+		font[FONT_M].drawString(buf, 420, 830);
 	}
 	
 	/********************
@@ -907,6 +907,14 @@ void ofApp::draw_ColorTheme()
 			ofSetColor(col_purple.GetColor(200));
 			sprintf(buf, "Gui:Purple");
 			break;
+		case COLOR_THEME::THEME_CANDY:
+			ofSetColor(col_pink.GetColor(200));
+			sprintf(buf, "Gui:Candy");
+			break;
+		case COLOR_THEME::THEME_PSYCHE:
+			ofSetColor(col_cian.GetColor(200));
+			sprintf(buf, "Gui:Psychedelic");
+			break;
 	}
 	ofDrawCircle(20, 825, 9);
 	
@@ -926,6 +934,12 @@ void ofApp::draw_ColorTheme()
 			break;
 		case COLOR_THEME::THEME_PURPLE:
 			ofSetColor(col_purple.GetColor(200));
+			break;
+		case COLOR_THEME::THEME_CANDY:
+			ofSetColor(col_pink.GetColor(200));
+			break;
+		case COLOR_THEME::THEME_PSYCHE:
+			ofSetColor(col_cian.GetColor(200));
 			break;
 	}
 	ofDrawCircle(20, 850, 9);

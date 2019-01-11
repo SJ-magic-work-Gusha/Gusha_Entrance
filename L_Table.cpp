@@ -304,7 +304,7 @@ SEL__COL T_Color[COLOR_THEME::NUM_THEMES][NUM_STATES][MAX_CANDIDATES_PER_STATE] 
 	},																														
 	{ // 4																											//	play	H	H
 		{	3	,	sjRGBW(	0	,	1	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
-		{	1	,	sjRGBW(	1	,	1	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	1	,	sjRGBW(	1	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
 		{	-1	,	sjRGBW(	0	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
 	},																														
 },																															
@@ -352,6 +352,62 @@ SEL__COL T_Color[COLOR_THEME::NUM_THEMES][NUM_STATES][MAX_CANDIDATES_PER_STATE] 
 	{ // 4																											//	play	H	H
 		{	2	,	sjRGBW(	0.4	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
 		{	1	,	sjRGBW(	0	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	-1	,	sjRGBW(	0	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+	},																														
+},																															
+{ // Candy																															
+	{ // 0																											//	stop	x	x
+		{	1	,	sjRGBW(	1	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	-1	,	sjRGBW(	0	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+	},																														
+	{ // 1																											//	play	L	L
+		{	1	,	sjRGBW(	1	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	-1	,	sjRGBW(	0	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+	},																														
+	{ // 2																											//	play	L	H
+		{	6	,	sjRGBW(	1	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	4	,	sjRGBW(	1	,	1	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	-1	,	sjRGBW(	0	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+	},																														
+	{ // 3																											//	play	H	L
+		{	1	,	sjRGBW(	1	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	-1	,	sjRGBW(	0	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+	},																														
+	{ // 4																											//	play	H	H
+		{	3	,	sjRGBW(	1	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	1	,	sjRGBW(	1	,	1	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	1	,	sjRGBW(	0	,	1	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	-1	,	sjRGBW(	0	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+	},																														
+},																															
+{ // Psyche																															
+	{ // 0																											//	stop	x	x
+		{	1	,	sjRGBW(	0	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	-1	,	sjRGBW(	0	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+	},																														
+	{ // 1																											//	play	L	L
+		{	1	,	sjRGBW(	0	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	-1	,	sjRGBW(	0	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+	},																														
+	{ // 2																											//	play	L	H
+		{	1	,	sjRGBW(	1	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	1	,	sjRGBW(	0	,	1	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	1	,	sjRGBW(	0	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	-1	,	sjRGBW(	0	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+	},																														
+	{ // 3																											//	play	H	L
+		{	1	,	sjRGBW(	0	,	1	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	-1	,	sjRGBW(	0	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+	},																														
+	{ // 4																											//	play	H	H
+		{	1	,	sjRGBW(	1	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	1	,	sjRGBW(	0	,	1	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	1	,	sjRGBW(	0	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	1	,	sjRGBW(	1	,	1	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	1	,	sjRGBW(	1	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	1	,	sjRGBW(	0.4	,	0	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	1	,	sjRGBW(	0	,	1	,	1	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
+		{	1	,	sjRGBW(	1	,	0.3	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
 		{	-1	,	sjRGBW(	0	,	0	,	0	,	0	),	sjRGBW(	0	,	0	,	0	,	0	),	},								
 	},																														
 },																															

@@ -24,7 +24,9 @@ struct PHYSICAL_CH_SET{
 /**************************************************
 **************************************************/
 enum{
+	LOGICAL_CH_EXTENTION_FOR_MORE_RANDOMNESS = 3,
 	MAX_LOGICAL_CHS_IN_A_BLOCK = 20,
+	MAX_LOGICAL_CHS_IN_A_BLOCK_EXTENDED = 20 * LOGICAL_CH_EXTENTION_FOR_MORE_RANDOMNESS,
 };
 
 /**************************************************
@@ -34,7 +36,7 @@ struct LED_DESIGN_LUM{
 	sjRGBW color_L;
 	sjRGBW color_H;
 	
-	int id_order[MAX_LOGICAL_CHS_IN_A_BLOCK];
+	int id_order[MAX_LOGICAL_CHS_IN_A_BLOCK_EXTENDED];
 	
 	void set(pFUNC_LUM _pFunc, const sjRGBW& _col_L, const sjRGBW& _col_H, pFUNC_FixIdOrder pFunc_FixIdOrder, int NumLogicalChs){
 		pFunc = _pFunc;

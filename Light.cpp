@@ -776,14 +776,32 @@ pFUNC_FixIdOrder LIGHT::Set_FuncLum__LayerStrobe(int BlockId)
 {
 	/********************
 	********************/
-	LedBlock[BlockId].LedDesign_Lum__StrobeW.pFunc = LED_DESIGN_FUNC::Func_GetLum__Strobe_1_W;
+	int weight[] = {4, 4, 2}; // Forward, Reverse, Random
+	int NumCandidates = int(sizeof(weight) / sizeof(weight[0]));
 	
-	int Num_LogicalChs = Count_NumLogicalChs(LedBlock[BlockId]);
-	LED_DESIGN_FUNC::FixIdOrder_Random(LedBlock[BlockId].LedDesign_Lum__StrobeW.id_order, Num_LogicalChs, NULL);
+	if(Vector_Weight.size() < NumCandidates) Vector_Weight.resize(NumCandidates);
+	
+	for(int i = 0; i < NumCandidates; i++){
+		Vector_Weight[i] = weight[i];
+	}
 	
 	/********************
+	candidateの中で、どれを選択するかは、blockごとにDice.
 	********************/
-	return LED_DESIGN_FUNC::FixIdOrder_Random;
+	LedBlock[BlockId].LedDesign_Lum__StrobeW.pFunc = LED_DESIGN_FUNC::Func_GetLum__Strobe_1_W; // FuncはFixed.
+	
+	int Num_LogicalChs = Count_NumLogicalChs(LedBlock[BlockId]);
+	int id = L_UTIL::Dice_index(Vector_Weight, NumCandidates);
+	if(id == 0){
+		LED_DESIGN_FUNC::FixIdOrder_Forward(LedBlock[BlockId].LedDesign_Lum__StrobeW.id_order, Num_LogicalChs * LOGICAL_CH_EXTENTION_FOR_MORE_RANDOMNESS, NULL);
+		return LED_DESIGN_FUNC::FixIdOrder_Forward;
+	}else if(id == 1){
+		LED_DESIGN_FUNC::FixIdOrder_Reverse(LedBlock[BlockId].LedDesign_Lum__StrobeW.id_order, Num_LogicalChs * LOGICAL_CH_EXTENTION_FOR_MORE_RANDOMNESS, NULL);
+		return LED_DESIGN_FUNC::FixIdOrder_Reverse;
+	}else{
+		LED_DESIGN_FUNC::FixIdOrder_Random(LedBlock[BlockId].LedDesign_Lum__StrobeW.id_order, Num_LogicalChs * LOGICAL_CH_EXTENTION_FOR_MORE_RANDOMNESS, NULL);
+		return LED_DESIGN_FUNC::FixIdOrder_Random;
+	}
 }
 
 /******************************
@@ -1018,9 +1036,10 @@ void LIGHT::update_LedParam_Lum(double Amp_GainSync, bool b_BeatLock, double Bea
 	count = 0;
 	for(int BlockId = ParamForLedControl__Layer_Strobe.id_from; count < ParamForLedControl__Layer_Strobe.NumBlocks_on; count++, inc_ValidBlocks_BlockId(BlockId)){
 		int NumLogicalChs = Count_NumLogicalChs(LedBlock[BlockId]);
+		int NumLogicalChs_Extended = NumLogicalChs * LOGICAL_CH_EXTENTION_FOR_MORE_RANDOMNESS;
 		
-		for(int i = 0; i < NumLogicalChs; i++){
-			sjRGBW color = LedBlock[BlockId].LedDesign_Lum__StrobeW.pFunc(now, NumLogicalChs, i, 
+		for(int i = 0; i < NumLogicalChs_Extended; i++){
+			sjRGBW color = LedBlock[BlockId].LedDesign_Lum__StrobeW.pFunc(now, NumLogicalChs_Extended, i, 
 													ParamForLedControl__Layer_Strobe.d_LumInterval_Strobe, ParamForLedControl__Layer_Strobe.d_LumLength_Strobe, 
 													ParamForLedControl__Layer_Strobe.d_LumInterval_Flow, ParamForLedControl__Layer_Strobe.d_LumLength_Flow,
 													Amp_GainSync, b_BeatLock, BeatInterval, t_LastBeat, 
@@ -1028,7 +1047,7 @@ void LIGHT::update_LedParam_Lum(double Amp_GainSync, bool b_BeatLock, double Bea
 			
 			color *= LayerAlpha_Strobe.get_alpha();
 			
-			int LogicalCh_id = LedBlock[BlockId].LedDesign_Lum__StrobeW.id_order[i];
+			int LogicalCh_id /* Actual Logical id */ = LedBlock[BlockId].LedDesign_Lum__StrobeW.id_order[i] % NumLogicalChs;
 			int NumPhysicalChs = Count_NumPhysicalChs(LedBlock[BlockId].LogicalCh[LogicalCh_id]);
 			for(int j = 0; j < NumPhysicalChs; j++){
 				int PhysicalCh_id = LedBlock[BlockId].LogicalCh[LogicalCh_id].PhysicalCh[j];

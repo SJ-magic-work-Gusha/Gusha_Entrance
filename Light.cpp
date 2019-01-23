@@ -492,13 +492,13 @@ void LIGHT::setup(int State_BandGain, int State_d2_BandGain3)
 	void LAYER_ALPHA::setup(float now, int _condition, double RiseTime, double FallTime);
 	********************/
 	float _now = ofGetElapsedTimef();
-	LayerAlpha[0].setup(_now, 1.0, 1.0); // stop.
-	LayerAlpha[1].setup(_now, 0.5, 1.0); // [4], [0] = LL
-	LayerAlpha[2].setup(_now, 0.0, 1.0); // [4], [0] = LH
-	LayerAlpha[3].setup(_now, 0.5, 1.0); // [4], [0] = HL
-	LayerAlpha[4].setup(_now, 0.0, 1.0); // [4], [0] = HH
-	LayerAlpha_Strobe.setup(_now, 0.5, 2.0);
-	LayerAlpha_ON.setup(_now, 0.0, 2.0);
+	LayerAlpha[0].setup(_now, 1.0, 1.0, 1.0, 1.0); // stop.
+	LayerAlpha[1].setup(_now, 0.5, 0.5, 1.0, 1.0); // [4], [0] = LL
+	LayerAlpha[2].setup(_now, 0.0, 0.0, 1.0, 1.0); // [4], [0] = LH
+	LayerAlpha[3].setup(_now, 0.5, 0.5, 1.0, 1.0); // [4], [0] = HL
+	LayerAlpha[4].setup(_now, 0.0, 0.0, 1.0, 1.0); // [4], [0] = HH
+	LayerAlpha_Strobe.setup(_now, 0.5, 0.5, 0.7, 2.2);
+	LayerAlpha_ON.setup(_now, 0.0, 0.0, 2.0, 2.0);
 	
 	/********************
 	********************/

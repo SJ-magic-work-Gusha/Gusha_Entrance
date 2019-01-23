@@ -22,6 +22,31 @@
 **************************************************/
 class LAYER_ALPHA{
 private:
+	/****************************************
+	****************************************/
+	class VAL_IN_RANGE{
+	private:
+		double val_min;
+		double val_max;
+		double val;
+		
+		double t_min;
+		double t_max;
+		
+	public:
+		VAL_IN_RANGE()
+		: t_min(2.0), t_max(10.0), val_min(1.0/2.0), val_max(1.0/1.0)
+		{
+			val = val_min;
+		}
+		
+		void setup(double _min, double _max, double _init) { val_min = _min; val_max = _max; val = _init; }
+		void update_val(double delta_t) { val = ofMap(delta_t, t_min, t_max, val_max, val_min, true); }
+		double get_val() { return val; }
+	};
+	
+	/****************************************
+	****************************************/
 	enum STATE{
 		STATE_OFF,
 		STATE_ON,
@@ -31,31 +56,37 @@ private:
 	
 	double alpha;
 	
-	double RiseSpeed;
-	double FallSpeed;
+	VAL_IN_RANGE RiseSpeed;
+	VAL_IN_RANGE FallSpeed;
 	
 	float t_ChangeState;
 	bool b_Res_ImStable;
 	bool b_JumToOn;
 	
+	float t_StrobeOff;
+	
 	float t_LastInt;
 	
 public:
 	LAYER_ALPHA()
-	: State(STATE_OFF), RiseSpeed(1.0/1.0), FallSpeed(1.0/1.0), t_LastInt(0)
+	: State(STATE_OFF), t_LastInt(0)
 	{
 		Reset(0);
 	}
 	
-	void setup(float now, double RiseTime, double FallTime)
+	void setup(float now, double RiseTime_min, double RiseTime_max, double FallTime_min, double FallTime_max)
 	{
 		Reset(now);
 		
-		if(RiseTime <= 0)	RiseTime = 0.001; // 1ms means immediate.
-		RiseSpeed = 1.0/RiseTime;
+		if(RiseTime_min <= 0)	RiseTime_min = 0.001; // 1ms means immediate.
+		if(RiseTime_max <= 0)	RiseTime_max = 0.001; // 1ms means immediate.
+		if(RiseTime_max < RiseTime_min) RiseTime_max = RiseTime_min;
+		RiseSpeed.setup(1.0/RiseTime_max, 1.0/RiseTime_min, 1.0/RiseTime_max); // RiseTime_max gives minimum Rise speed.
 		
-		if(FallTime <= 0)	FallTime = 0.001;
-		FallSpeed = 1.0/FallTime;
+		if(FallTime_min <= 0)	FallTime_min = 0.001;
+		if(FallTime_max <= 0)	FallTime_max = 0.001;
+		if(FallTime_max < FallTime_min) FallTime_max = FallTime_min;
+		FallSpeed.setup(1.0/FallTime_max, 1.0/FallTime_min, 1.0/FallTime_max); // FallTime_max gives minimum Rise speed.
 	}
 	
 	void Reset(float now)
@@ -65,6 +96,7 @@ public:
 		t_ChangeState = now;
 		b_Res_ImStable = false;
 		b_JumToOn = false;
+		t_StrobeOff = now;
 		t_LastInt = now;
 	}
 	
@@ -74,18 +106,21 @@ public:
 		
 		switch(State){
 			case STATE_OFF:
-				alpha -= FallSpeed * (now - t_LastInt);
+				alpha -= FallSpeed.get_val() * (now - t_LastInt);
 				if(alpha < 0) alpha = 0;
 				if(1 < alpha) alpha = 1;
 				
 				if(b_condition){
 					State = STATE_ON;
 					if(alpha == 0) b_JumToOn = true;
+					
+					RiseSpeed.update_val(now - t_StrobeOff);
+					FallSpeed.update_val(now - t_StrobeOff);
 				}
 				break;
 				
 			case STATE_ON:
-				alpha += RiseSpeed * (now - t_LastInt);
+				alpha += RiseSpeed.get_val() * (now - t_LastInt);
 				if(alpha < 0) alpha = 0;
 				if(1 < alpha) alpha = 1;
 				
@@ -94,6 +129,7 @@ public:
 					t_ChangeState = now;
 					b_Res_ImStable = false;
 					b_JumToOn = false;
+					t_StrobeOff = now;
 				}
 				break;
 		}

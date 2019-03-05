@@ -258,7 +258,7 @@ private:
 	void update_LedParam_Lum(double Amp_GainSync, bool b_BeatLock, double BeatInterval, double t_LastBeat);
 	void update_LedParam_PanTilt(int State_BandGain, double Amp_GainSync);
 	
-	void SendUdp_Vj_Unity(bool b_Beat_Band3);
+	void SendUdp_Vj_Unity(int State_BandGain, bool b_Beat_Band3);
 	
 	void inc_ValidBlocks_BlockId(int& id);
 	

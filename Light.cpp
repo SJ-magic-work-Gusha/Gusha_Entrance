@@ -953,7 +953,7 @@ void LIGHT::update(int State_BandGain, bool b_Layer_strobe, bool b_Layer_ON, int
 	/********************
 	udp
 	********************/
-	if(b_EnableProcess_vj) SendUdp_Vj_Unity(b_Beat_Band3);
+	if(b_EnableProcess_vj) SendUdp_Vj_Unity(State_BandGain, b_Beat_Band3);
 	
 	/********************
 	********************/
@@ -962,14 +962,21 @@ void LIGHT::update(int State_BandGain, bool b_Layer_strobe, bool b_Layer_ON, int
 
 /******************************
 ******************************/
-void LIGHT::SendUdp_Vj_Unity(bool b_Beat_Band3)
+void LIGHT::SendUdp_Vj_Unity(int State_BandGain, bool b_Beat_Band3)
 {
 	/********************
 	********************/
-	char buf[BUF_SIZE];
 	string message="";
 	
 	message += "/FromEntrance<p>";
+	
+	/********************
+	********************/
+	{
+		char buf[BUF_SIZE];
+		sprintf(buf, "%d<p>", State_BandGain);
+		message += buf;
+	}
 	
 	/********************
 	********************/
@@ -979,6 +986,8 @@ void LIGHT::SendUdp_Vj_Unity(bool b_Beat_Band3)
 	/********************
 	********************/
 	for(int i = 0; i < NUM_LEDS; i++){
+		char buf[BUF_SIZE];
+		
 		if(i == NUM_LEDS - 1)	sprintf(buf, "%f,%f,%f,%f", LedLight[i].LedParam_Out.rgbw.r, LedLight[i].LedParam_Out.rgbw.g, LedLight[i].LedParam_Out.rgbw.b, LedLight[i].LedParam_Out.rgbw.w);
 		else					sprintf(buf, "%f,%f,%f,%f|", LedLight[i].LedParam_Out.rgbw.r, LedLight[i].LedParam_Out.rgbw.g, LedLight[i].LedParam_Out.rgbw.b, LedLight[i].LedParam_Out.rgbw.w);
 		

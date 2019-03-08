@@ -985,6 +985,20 @@ void LIGHT::SendUdp_Vj_Unity(int State_BandGain, bool b_Beat_Band3)
 	
 	/********************
 	********************/
+	{
+		int State_BandGain = ParamFromSignalProcess.State_BandGain;
+		int DesignId = ParamForLedControl__Layer_States[State_BandGain].Design_id;
+		
+		sjRGBW rgbw = LedBlock[0].LedDesign_Lum[State_BandGain][DesignId].color_H;
+		
+		char buf[BUF_SIZE];
+		sprintf(buf, "%f,%f,%f,%f<p>", rgbw.r, rgbw.g, rgbw.b, rgbw.w);
+		
+		message += buf;
+	}
+
+	/********************
+	********************/
 	for(int i = 0; i < NUM_LEDS; i++){
 		char buf[BUF_SIZE];
 		

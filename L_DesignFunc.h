@@ -33,6 +33,7 @@ public:
 	static sjRGBW Func_GetLum__Strobe_1_W(double now, int NumChs, int Ch_id, double d_LumInterval_Strobe, double d_LumLength_Strobe, double d_LumInterval_Flow, double d_LumLength_Flow, double Amp_GainSync, bool b_BeatLock, double BeatInterval, double t_LastBeat, const sjRGBW& Col_L, const sjRGBW& Col_H, string* Name);
 	static sjRGBW Func_GetLum__Strobe_1_C(double now, int NumChs, int Ch_id, double d_LumInterval_Strobe, double d_LumLength_Strobe, double d_LumInterval_Flow, double d_LumLength_Flow, double Amp_GainSync, bool b_BeatLock, double BeatInterval, double t_LastBeat, const sjRGBW& Col_L, const sjRGBW& Col_H, string* Name);
 
+	static double Func_GetPos__Flash(double now, double Amp_GainSync, bool b_BeatLock, double BeatInterval, double t_LastBeat);
 	static sjPanTilt Func_GetPos__Stop(double now, int NumChs, int Ch_id, double d_interval, double Amp_GainSync, string* Name);
 	static sjPanTilt Func_GetPos__Center(double now, int NumChs, int Ch_id, double d_interval, double Amp_GainSync, string* Name);
 	static sjPanTilt Func_GetPos__Circle_L(double now, int NumChs, int Ch_id, double d_interval, double Amp_GainSync, string* Name);

@@ -953,7 +953,7 @@ void LIGHT::update(int State_BandGain, bool b_Layer_strobe, bool b_Layer_ON, int
 	/********************
 	udp
 	********************/
-	if(b_EnableProcess_vj) SendUdp_Vj_Unity(State_BandGain, b_Beat_Band3);
+	if(b_EnableProcess_vj) SendUdp_Vj_Unity(State_BandGain, Amp_GainSync, b_BeatLock, BeatInterval, t_LastBeat, b_Beat_Band3);
 	
 	/********************
 	********************/
@@ -962,7 +962,7 @@ void LIGHT::update(int State_BandGain, bool b_Layer_strobe, bool b_Layer_ON, int
 
 /******************************
 ******************************/
-void LIGHT::SendUdp_Vj_Unity(int State_BandGain, bool b_Beat_Band3)
+void LIGHT::SendUdp_Vj_Unity(int State_BandGain, double Amp_GainSync, bool b_BeatLock, double BeatInterval, double t_LastBeat, bool b_Beat_Band3)
 {
 	/********************
 	********************/
@@ -982,6 +982,19 @@ void LIGHT::SendUdp_Vj_Unity(int State_BandGain, bool b_Beat_Band3)
 	********************/
 	if(b_Beat_Band3)	message += "1<p>";
 	else				message += "0<p>";
+	
+	/********************
+	********************/
+	{
+		// char buf[BUF_SIZE];
+		// sprintf(buf, "%f<p>", Amp_GainSync);
+		// message += buf;
+		
+		char buf[BUF_SIZE];
+		double Level = LED_DESIGN_FUNC::Func_GetPos__Flash(now, Amp_GainSync, b_BeatLock, BeatInterval, t_LastBeat);
+		sprintf(buf, "%f<p>", Level);
+		message += buf;
+	}
 	
 	/********************
 	********************/

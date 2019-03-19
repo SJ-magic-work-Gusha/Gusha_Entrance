@@ -215,6 +215,7 @@ public:
 		ofxToggle PlayStart;
 		ofxToggle FestMode;
 		ofxToggle b_Enable_LayerON;
+		ofxToggle b_Enable_GainSync_CG_MovingLight;
 		
 	ofxGuiGroup Group_ColorTheme;
 		ofxFloatSlider ColorTheme_id; // ofxIntSliderだと操作しづらいので.

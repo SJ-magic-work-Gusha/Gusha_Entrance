@@ -225,16 +225,12 @@ private
 double LED_DESIGN_FUNC::Filter_GainSync_Pos(double Amp_GainSync)
 {
 	/********************
+	useful little functions
+		http://www.iquilezles.org/www/articles/functions/functions.htm
 	********************/
-	const double p = 0.15;
-	const double a = 1.0/(p * p);
-	
-	double _Amp_GainSync;
-	
-	if( (0.5 - p < Amp_GainSync) && (Amp_GainSync < 0.5 + p) )	{ _Amp_GainSync = a * pow((Amp_GainSync - 0.5), 3) + 0.5; }
-	else														{ _Amp_GainSync = Amp_GainSync; }
-	
-	return _Amp_GainSync;
+	float k = 0.4;
+    float a = 0.5*pow(2.0*((Amp_GainSync<0.5)?Amp_GainSync:1.0-Amp_GainSync), k);
+    return (Amp_GainSync<0.5)?a:1.0-a;
 }
 
 /******************************
@@ -254,6 +250,39 @@ double LED_DESIGN_FUNC::GetPos__Triangle(double t, double T, double phase)
 					);
 	
 	return ret;
+}
+
+/******************************
+description
+	for LIGHT::SendUdp_Vj_Unity().
+	Hardware制御には使用しないので、Light.cpp側に置いてもいい関数ではあるが、同種類の関数が並ぶこちらに置いた。
+	
+	CG上のmoving Light制御に使うためのparameterを算出。
+******************************/
+double LED_DESIGN_FUNC::Func_GetPos__Flash(	double now, double Amp_GainSync, bool b_BeatLock, double BeatInterval, double t_LastBeat)
+{
+	if(!Gui_Global->b_Enable_GainSync_CG_MovingLight){
+		/*
+		double T = 8.0;
+		return 0.5 * cos(2 * PI * now / T) + 0.5;
+		*/
+		return 0.5;
+		
+	}else{
+		double Lum = 0;
+		if( b_BeatLock && (BeatInterval != 0) ){
+			if( (now - t_LastBeat < 0) || (BeatInterval < now - t_LastBeat) ){
+				Lum = 0;
+			}else{
+				double tan = -1/BeatInterval;
+				Lum = tan * (now - t_LastBeat) + 1;
+			}
+			return Lum;
+			
+		}else{
+			return Amp_GainSync;
+		}
+	}
 }
 
 /******************************

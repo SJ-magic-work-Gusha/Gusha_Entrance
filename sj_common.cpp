@@ -215,6 +215,7 @@ void GUI_GLOBAL::setup(string GuiName, string FileName, float x, float y)
 		Group_LightDesign.add(PlayStart.setup("PlayStart", false));
 		Group_LightDesign.add(FestMode.setup("FestMode", false));
 		Group_LightDesign.add(b_Enable_LayerON.setup("Enable:LayerON", false));
+		Group_LightDesign.add(b_Enable_GainSync_CG_MovingLight.setup("GainSync CG moving", true));
 
 	gui.add(&Group_LightDesign);
 	

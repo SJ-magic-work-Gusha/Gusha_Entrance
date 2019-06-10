@@ -243,7 +243,7 @@ param
 ******************************/
 double THREAD_FFT::getArrayVal(int GainType_id, int id)
 {
-	if(AUDIO_BUF_SIZE/2 <= id) return 0;
+	if( (id < 0) || (AUDIO_BUF_SIZE/2 <= id) ) return 0;
 	
 	double ret = 0;
 	this->lock();
@@ -279,7 +279,7 @@ param
 ******************************/
 double THREAD_FFT::getArrayVal_x_DispGain(int GainType_id, int id, float Gui_DispGain)
 {
-	if(AUDIO_BUF_SIZE/2 <= id) return 0;
+	if( (id < 0) || (AUDIO_BUF_SIZE/2 <= id) ) return 0;
 	
 	double ret = 0;
 	this->lock();
@@ -309,7 +309,7 @@ double THREAD_FFT::getArrayVal_x_DispGain(int GainType_id, int id, float Gui_Dis
 ******************************/
 double THREAD_FFT::getArrayVal__ZeroCross_of_SlowSmoothedGain(int id)
 {
-	if(AUDIO_BUF_SIZE/2 <= id) return -1; // ないはずだが、一応、periodである"-1"を返しておく.
+	if( (id < 0) || (AUDIO_BUF_SIZE/2 <= id) ) return -1;  // ないはずだが、一応、periodである"-1"を返しておく.
 	
 	double ret;
 	this->lock();

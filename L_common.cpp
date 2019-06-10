@@ -16,7 +16,7 @@ void L_UTIL::Array_Forward(int* Array, int Num)
 
 /******************************
 ******************************/
-void L_UTIL::Array_Forward(vector<int> Array)
+void L_UTIL::Array_Forward(vector<int>& Array)
 {
 	int Num = Array.size();
 	
@@ -36,7 +36,7 @@ void L_UTIL::Array_Reverse(int* Array, int Num)
 
 /******************************
 ******************************/
-void L_UTIL::Array_Reverse(vector<int> Array)
+void L_UTIL::Array_Reverse(vector<int>& Array)
 {
 	int Num = Array.size();
 	
@@ -74,7 +74,7 @@ void L_UTIL::FisherYates(int* Array, int Num)
 
 /******************************
 ******************************/
-void L_UTIL::FisherYates(vector<int> Array)
+void L_UTIL::FisherYates(vector<int>& Array)
 {
 	int Num = Array.size();
 	
@@ -138,7 +138,7 @@ int L_UTIL::Dice_index(int *Weight, int NUM)
 description
 	引数"NUM"は、Weightの全体数でなく、確認する数なので、必要.
 ******************************/
-int L_UTIL::Dice_index(vector<int> Weight, int NUM)
+int L_UTIL::Dice_index(vector<int>& Weight, int NUM)
 {
 	/***********************
 	***********************/

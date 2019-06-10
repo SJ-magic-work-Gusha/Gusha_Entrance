@@ -100,14 +100,14 @@ private:
 
 public:
 	static void Array_Forward(int* Array, int Num);
-	static void Array_Forward(vector<int> Array);
+	static void Array_Forward(vector<int>& Array);
 	static void Array_Reverse(int* Array, int Num);
-	static void Array_Reverse(vector<int> Array);
+	static void Array_Reverse(vector<int>& Array);
 	static void FisherYates(int* Array, int Num);
-	static void FisherYates(vector<int> Array);
+	static void FisherYates(vector<int>& Array);
 	
 	static int Dice_index(int *Weight, int NUM);
-	static int Dice_index(vector<int> Weight, int NUM);
+	static int Dice_index(vector<int>& Weight, int NUM);
 };
 
 /************************************************************
@@ -115,4 +115,4 @@ public:
 typedef sjRGBW (*pFUNC_LUM)(double now, int NumChs, int Ch_id, double d_LumInterval_Strobe, double d_LumLength_Strobe, double d_LumInterval_Flow, double d_LumLength_Flow, double Amp_GainSync, bool b_BeatLock, double BeatInterval, double t_LastBeat, const sjRGBW& Col_L, const sjRGBW& Col_H, string* Name);
 typedef sjPanTilt (*pFUNC_POS)(double now, int NumChs, int Ch_id, double d_interval, double Amp_GainSync, string* Name);
 typedef void (*pFUNC_FixIdOrder)(int* Array, int Num, string* Name);
-typedef void (*pFUNC_VectorSort)(vector<int> Array);
+typedef void (*pFUNC_VectorSort)(vector<int>& Array);
